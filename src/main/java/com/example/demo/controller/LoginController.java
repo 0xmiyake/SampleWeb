@@ -51,7 +51,7 @@ public class LoginController {
 		// userInfo.isPresent() は、Optional に値が存在するかどうかを確認
 		var isCorrectUserAuth = userInfo.isPresent() 
 				// フォームで入力されたパスワードと、データベースに保存されているパスワードが
-				 //   一致するかを確認
+				 //   一致するかを確認。
 				&& form.getPassword().equals(userInfo.get().getPassword());
 		if(isCorrectUserAuth) {
 			return "redirect:/menu";
