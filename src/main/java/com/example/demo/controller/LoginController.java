@@ -38,14 +38,20 @@ public class LoginController {
 	 * 初期表示
 	 * 
 	 * @param model モデル
-	 * @param form 入力情報
+	 * @param form 入力情報(ログインIDとパスワード)
 	 * @return 表示画面
 	 */
 	
+	// HTTPのPOSTリクエストを受け取るためのアノテーション
 	@PostMapping("/login")
 	public String login(Model model, LoginForm form) {
+		// ログインIDに基づいてユーザー情報をデータベースから取得するメソッド
+		// LoginService クラスの searchUserById メソッドを呼び出して、Optional<UserInfo> を返します
 		var userInfo = service.searchUserById(form.getLoginId());
+		// userInfo.isPresent() は、Optional に値が存在するかどうかを確認
 		var isCorrectUserAuth = userInfo.isPresent() 
+				// フォームで入力されたパスワードと、データベースに保存されているパスワードが
+				 //   一致するかを確認
 				&& form.getPassword().equals(userInfo.get().getPassword());
 		if(isCorrectUserAuth) {
 			return "redirect:/menu";
